@@ -14,13 +14,12 @@ export class PostsService {
     return this.prismaService.post.findMany();
   }
 
-  findOne(id: number) {
-    const post = this.prismaService.post.findUnique({
+  async findOne(id: number) {
+    const post = await this.prismaService.post.findUnique({
       where: {
         id: id,
       },
     });
-    console.log(post, 'aici');
     if (!post) throw new NotFoundException('Post Not Found');
     return post;
   }

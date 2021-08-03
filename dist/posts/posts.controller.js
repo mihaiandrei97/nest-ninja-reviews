@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const posts_service_1 = require("./posts.service");
 const create_post_dto_1 = require("./dto/create-post.dto");
 const update_post_dto_1 = require("./dto/update-post.dto");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 let PostsController = class PostsController {
     constructor(postsService) {
         this.postsService = postsService;
@@ -24,17 +25,18 @@ let PostsController = class PostsController {
     create(createPostDto) {
         return this.postsService.create(createPostDto);
     }
-    findAll() {
+    findAll(req) {
+        console.log(req.user);
         return this.postsService.findAll();
     }
     findOne(id) {
-        return this.postsService.findOne(+id);
+        return this.postsService.findOne(id);
     }
     update(id, updatePostDto) {
-        return this.postsService.update(+id, updatePostDto);
+        return this.postsService.update(id, updatePostDto);
     }
     remove(id) {
-        return this.postsService.remove(+id);
+        return this.postsService.remove(id);
     }
 };
 __decorate([
@@ -45,31 +47,33 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PostsController.prototype, "create", null);
 __decorate([
+    common_1.UseGuards(jwt_auth_guard_1.JwtAuthGuard),
     common_1.Get(),
+    __param(0, common_1.Request()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], PostsController.prototype, "findAll", null);
 __decorate([
     common_1.Get(':id'),
-    __param(0, common_1.Param('id')),
+    __param(0, common_1.Param('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], PostsController.prototype, "findOne", null);
 __decorate([
     common_1.Patch(':id'),
-    __param(0, common_1.Param('id')),
+    __param(0, common_1.Param('id', common_1.ParseIntPipe)),
     __param(1, common_1.Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_post_dto_1.UpdatePostDto]),
+    __metadata("design:paramtypes", [Number, update_post_dto_1.UpdatePostDto]),
     __metadata("design:returntype", void 0)
 ], PostsController.prototype, "update", null);
 __decorate([
     common_1.Delete(':id'),
-    __param(0, common_1.Param('id')),
+    __param(0, common_1.Param('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], PostsController.prototype, "remove", null);
 PostsController = __decorate([

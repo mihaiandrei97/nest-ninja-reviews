@@ -22,13 +22,12 @@ let PostsService = class PostsService {
     findAll() {
         return this.prismaService.post.findMany();
     }
-    findOne(id) {
-        const post = this.prismaService.post.findUnique({
+    async findOne(id) {
+        const post = await this.prismaService.post.findUnique({
             where: {
                 id: id,
             },
         });
-        console.log(post, 'aici');
         if (!post)
             throw new common_1.NotFoundException('Post Not Found');
         return post;

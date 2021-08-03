@@ -6,7 +6,7 @@ export declare class PostsService {
     constructor(prismaService: PrismaService);
     create(post: CreatePostDto): import(".prisma/client").Prisma.Prisma__PostClient<import(".prisma/client").Post>;
     findAll(): import(".prisma/client").PrismaPromise<import(".prisma/client").Post[]>;
-    findOne(id: number): import(".prisma/client").Prisma.Prisma__PostClient<import(".prisma/client").Post>;
+    findOne(id: number): Promise<import(".prisma/client").Post>;
     update(id: number, post: UpdatePostDto): import(".prisma/client").Prisma.Prisma__PostClient<import(".prisma/client").Post>;
     remove(id: number): import(".prisma/client").Prisma.Prisma__PostClient<import(".prisma/client").Post>;
 }
